@@ -99,9 +99,6 @@ select salesman_id,name from salesmen as s where 1<
 /*From the following tables write a SQL query to find those orders, which are higher than the average 
 amount of the orders. Return ord_no, purch_amt, ord_date, customer_id and salesman_id.*/
 
-
-
-
 select * from orderss as a where purch_amt >
 (select avg(purch_amt) from orderss as b );
 
@@ -203,4 +200,44 @@ select * from salesmen as a where exists
  (select grade from grade where city<"New York");
 
 select * from grade where city<"New York"; 
+
+# want a details of salesmen whose number of customers  should be greater than 1
+
+select * from salesmen where salesman_id in
+(select salesman_id from orderss group by salesman_id having count(salesman_id)>1);
  
+ create table sales(
+	sales_id int not null,
+    city varchar(10) not null);
+    
+create table cust_table(
+	sales_id int,
+    city varchar(10) not null,
+    cust_name varchar(10) not null,
+    foreign key(sales_id) references sales(sales_id)
+	);
+
+alter table sales modify sales_id int primary key;
+
+insert into sales (sales_id,city) values
+	(1,"A"),
+	(2,"B"),
+	(3,"C"),
+	(4,"D");
+insert into cust_table values
+	(4,"A","ll"),
+    (3,"E","ww"),
+    (2,"B","ss"),
+    (2,"B","AA"),
+    (1,"C","qq"),
+    (1,"D","jj")
+    ;
+    
+select * from sales;
+select * from cust_table;
+
+select * from sales where sales_id in
+	(select sales_id from cust_table group by sales_id,city
+    having count(sales_id)>1);
+
+

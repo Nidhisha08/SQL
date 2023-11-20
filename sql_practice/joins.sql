@@ -200,3 +200,7 @@ SELECT A.pro_name, A.pro_price, F.com_name
 
 # here we do not add non aggregated column.
 SELECT MAX(pro_price), com_name FROM item_mast INNER JOIN  comany_mast WHERE com_id = pro_com GROUP BY com_name;
+
+use db1;
+select * from orderss;
+select * from commission;
