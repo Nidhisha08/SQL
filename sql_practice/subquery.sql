@@ -139,11 +139,11 @@ SELECT *
 FROM salesman 
 WHERE salesman_id IN (
    SELECT DISTINCT salesman_id 
-   FROM customer a 
+   FROM grade a 
    WHERE EXISTS (
       SELECT * 
-      FROM customer b 
-      WHERE b.salesman_id=a.salesman_id 
+      FROM grade b 
+      WHERE b.sales_id=a.sales_id 
       AND b.cust_name<>a.cust_name));
 
  # select sales_id,count(cust_id) from grade group by sales_id having count(cust_id);
@@ -181,7 +181,7 @@ SELECT * FROM salesmen  WHERE city=ANY
 /*From the following tables write a SQL query to find salespeople whose place of residence matches 
 any city where customers live. Return salesman_id, name, city and commission.*/
 
-select distinct salesman_id,s.city,c.city,commission from salesmen as s
+select  distinct s.salesman_id,s.city,c.city,commission,s.name from salesmen as s
  inner join grade as c where s.city=c.city;
 
 select * from salesmen where city in
@@ -230,8 +230,7 @@ insert into cust_table values
     (2,"B","ss"),
     (2,"B","AA"),
     (1,"C","qq"),
-    (1,"D","jj")
-    ;
+    (1,"D","jj");
     
 select * from sales;
 select * from cust_table;
@@ -240,4 +239,17 @@ select * from sales where sales_id in
 	(select sales_id from cust_table group by sales_id,city
     having count(sales_id)>1);
 
+select * from cust_table where city in
+	(select  city from sales where city="A");
+
+insert into sales values(5,"A");
+insert into sales values(6,"B");
+
+delete  from sales where sales_id=6;
+
+select * from cust_table where city =any
+	(select  city from sales where city="B");
+
+
+    
 
