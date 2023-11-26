@@ -1,4 +1,4 @@
-
+use data2;
 #stored procedure
 #syntax
 /*
@@ -194,3 +194,24 @@ create procedure sp_final_result(out result varchar(20),in id int)
  
 call sp_final_result(@result_1,214006);
 select @result_1;
+
+
+delimiter //
+ create procedure profit_report
+ (in state_name varchar(20),out result varchar(40),out avg_profit float,out avg_state float)
+	begin
+    declare avg_profit float default 0;
+    declare avg_state float default 0;
+    select avg(profit) into avg_profit from sales_data ;
+    select avg(profit) into avg_state from sales_data where state=state_name;
+    if avg_state>avg_profit then
+		set result="good profit";
+	else
+		set result="not good profit";
+	end if;
+    end //
+ drop procedure profit_report;
+ 
+
+call profit_report("Iowa",@result);
+select @result;

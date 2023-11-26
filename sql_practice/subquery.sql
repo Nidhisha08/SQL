@@ -69,10 +69,10 @@ select grade,count(cust_id) counts from grade where grade>
 earned the maximum commission. Return ord_no, purch_amt, ord_date, and salesman_id*/
 
 
-/*select * from orderss where salesman_id in(
+select * from orderss where salesman_id =(
  select salesman_id from salesmen group by salesman_id 
  having max(commission)
- order by commission desc limit 1); */
+ order by commission desc limit 1); 
 
 select * from orderss where salesman_id in(
 select salesman_id from salesmen where
