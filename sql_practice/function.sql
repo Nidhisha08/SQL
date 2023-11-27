@@ -78,6 +78,3 @@ end //
 
 select *,get_student_grade(average) from student;
 
-select * from emp;
-
-create function avg_sal_dept(
