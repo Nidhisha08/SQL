@@ -75,6 +75,28 @@ declare top_student varchar(200) default 0;
     return "fail";
     end if;
 end //
-
 select *,get_student_grade(average) from student;
 
+
+select * from employees;
+select * from offices;
+
+delimiter //
+create function avg_sal(jobs varchar(200))
+returns varchar(200)
+deterministic
+begin
+ declare avg_sal decimal(10,2) default 0;
+ select avg(officeCode) into avg_sal from employees where jobTitle=jobs
+ group by jobTitle;
+ return avg_sal;
+end //
+
+drop function avg_sal;
+select avg_sal("Sales Rep");
+
+
+select concat(m.firstName,' ',m.lastName) as manegar,
+ concat(e.firstName,' ',e.lastName) as employee 
+ from employees as e inner join employees as m
+ on m.employeeNumber=e.reportsTo;
