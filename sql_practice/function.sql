@@ -100,3 +100,5 @@ select concat(m.firstName,' ',m.lastName) as manegar,
  concat(e.firstName,' ',e.lastName) as employee 
  from employees as e inner join employees as m
  on m.employeeNumber=e.reportsTo;
+
+
